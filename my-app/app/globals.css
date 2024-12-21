@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  background-color: black;
+}
+
+@layer {
+  .nav-link{
+    @apply p-4 rounded-full;
+  }
+}
+
+.nav-link:hover {
+  animation-name: link;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes link {
+  100% {
+    background-color: hsl(0,0%,15%);
+  }
+}
