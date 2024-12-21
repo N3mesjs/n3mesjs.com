@@ -5,12 +5,11 @@
 
 :root {
   background-color: black;
+  color: white;
 }
 
-@layer {
-  .nav-link{
-    @apply p-4 rounded-full;
-  }
+.nav-link hr {
+  margin-top: 2px;
 }
 
 .nav-link:hover {
@@ -19,8 +18,24 @@
   animation-fill-mode: forwards;
 }
 
+.nav-link:hover hr {
+  animation-name: hrnav;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.title {
+  background-image: linear-gradient(to right, #007dc5, #a00098);
+}
+
 @keyframes link {
   100% {
     background-color: hsl(0,0%,15%);
+  }
+}
+
+@keyframes hrnav {
+  100% {
+    width: 90%;
   }
 }
