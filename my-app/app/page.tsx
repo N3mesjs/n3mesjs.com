@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaGithub } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -19,8 +19,9 @@ export default function Home() {
           </div>
       </div>
 
-      <nav className="flex items-center justify-end mt-4 mr-4">
-        <a href=""><button className="flex items-center bg-[hsl(212,79%,46%)] font-bold p-3 rounded-2xl gap-2"><FaInstagram size={25} />Instagram</button></a>
+      <nav className="flex items-center justify-end mt-4 mr-4 gap-4">
+        <a href="https://www.instagram.com/delsorbo_alessio/"><button className="flex items-center bg-[hsl(212,79%,46%)] hover:bg-[hsl(212,54%,28%)] font-bold p-3 rounded-2xl gap-2"><FaInstagram size={25} />Instagram</button></a>
+        <a href="https://github.com/N3mesjs"><button className="flex items-center bg-[hsl(212,17%,17%)] font-bold p-3 rounded-2xl gap-2"><FaGithub size={25} />Github</button></a>
       </nav>
 
       <main></main>
