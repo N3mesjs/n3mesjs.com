@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <nav>
-        <div className="absolute flex w-full justify-center top-3">
+        <div className="absolute flex top-3 left-[50%] translate-x-[-50%]">
           <div className="flex justify-center  items-center bg-[#161616] rounded-full p-[10px]">
             <Link href="/"><h1 className="text-[20px] font-bold mr-5 title rounded-full p-2">N3mesjs</h1></Link>
             <Link href="/">
