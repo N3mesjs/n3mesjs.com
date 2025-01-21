@@ -28,6 +28,26 @@
   background-image: linear-gradient(to right, #007dc5, #a00098);
 }
 
+.testoFigo {
+  background-image: linear-gradient(to right, #007dc5, #a00098, #007dc5, #a00098);
+  background-size: 400%;
+  color: transparent;
+  background-clip: text;
+  animation-name: anTestoFigo;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes anTestoFigo {
+  from {
+    background-position: 0%;
+  }
+  to {
+    background-position: 100%;
+  }
+}
+
 @keyframes link {
   100% {
     background-color: hsl(0,0%,15%);
