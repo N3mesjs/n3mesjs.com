@@ -8,6 +8,10 @@
   color: white;
 }
 
+/* * { utile per i debug in css, vedo bene cosa occupano gli elementi e come si comportano
+  outline: 3px solid white
+} */
+
 .nav-link hr {
   margin-top: 2px;
 }
