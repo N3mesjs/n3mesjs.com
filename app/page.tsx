@@ -30,6 +30,7 @@ export default function Home() {
         </div>
       </nav>
       <h1 className="absolute text-[40px] text-center top-[150px] left-[50%] translate-x-[-50%]"><span className="font-bold text-[50px] testoFigo">Work</span> in progress...</h1>
+      <iframe src="https://player.twitch.tv/?channel=n3mesjs&parent=localhost" height={378} width={620} allowFullScreen={true}></iframe>
     </div>
   );
 }
