@@ -46,7 +46,7 @@ export default function Home() {
     };
   }, [navRef]);
 
-  const handleButtonClick = (e: React.MouseEvent) => {
+  const handleButtonClick = () => {
     setMenu(!menu);
     setOpacita(!opacita);
     console.log("Button clicked, menu will be:", !menu);
