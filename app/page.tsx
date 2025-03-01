@@ -35,7 +35,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node) && buttonRef.current && buttonRef.current.contains(event.target as Node)) {
+      if (navRef.current && !navRef.current.contains(event.target as Node) || buttonRef.current && buttonRef.current.contains(event.target as Node)) {
         setMenu(false);
         setOpacita(false);
       }
