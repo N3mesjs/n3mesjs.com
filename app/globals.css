@@ -22,14 +22,45 @@
   animation-fill-mode: forwards;
 }
 
+@keyframes link {
+  100% {
+    background-color: hsl(0,0%,15%);
+  }
+}
+
 .nav-link:hover hr {
   animation-name: hrnav;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
+@keyframes hrnav {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 90%;
+  }
+}
+
 .title {
   background-image: linear-gradient(to right, #007dc5, #a00098);
+  background-size: 150%;
+}
+
+.title:hover{
+  animation-name: titleBg;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes titleBg {
+  from {
+    background-position: 0%;
+  }
+  to {
+    background-position: 100%;
+  }
 }
 
 .testoFigo {
@@ -52,17 +83,45 @@
   }
 }
 
-@keyframes link {
+.menu-nav {
+  animation-name: menu-nav;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes menu-nav {
+  0% {
+    transform: translateX(-100%);
+  }
   100% {
-    background-color: hsl(0,0%,15%);
+    transform: translateX(0%);
   }
 }
 
-@keyframes hrnav {
+.divIcone {
+  display: flex;
+  animation-name: divIcone;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.divIcone > * {
+  flex-shrink: 0;
+}
+
+.divIcone > *:hover {
+  animation-name: none;
+}
+
+@keyframes divIcone {
   0% {
-    width: 0%;
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(calc(-100% + 400px)); /* 400px è la larghezza del contenitore visibile */
   }
   100% {
-    width: 90%;
+    transform: translateX(0%);
   }
 }
