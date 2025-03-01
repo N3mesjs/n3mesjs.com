@@ -93,9 +93,12 @@ export default function Home() {
           {/* <h1 className="absolute text-[40px] text-center top-[150px] left-[50%] translate-x-[-50%]"><span className="font-bold text-[50px] testoFigo">Work</span> in progress...</h1> */}
           <div className="w-[1350px] m-auto flex flex-col items-center mt-[15em] max-lg:w-[400px]">
             <section>
-              <p className="text-[4em] text-center max-lg:text-[2em]">Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span><br />
-                I'm a <u>Full Stack</u> developer
+              <p className="text-[4em] text-center max-lg:text-[2em]">
+                Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
+                <br />
+                I&apos;m a <u>Full Stack</u> developer
               </p>
+
               <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
             </section>
             <section className="mt-[4em] flex flex-col items-center">
