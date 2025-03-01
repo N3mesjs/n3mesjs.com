@@ -46,13 +46,13 @@ docker buildx build --platform linux/arm64/v8 -t n3mesjs.com .
 # Push image
 
 docker login
-docker tag n3mesjs.com n3mesjs/n3mesjs.com:v1.1
-docker push n3mesjs/n3mesjs.com:v1.1
+docker tag n3mesjs.com n3mesjs/n3mesjs.com:v1.0
+docker push n3mesjs/n3mesjs.com:v1.0
 
 # Pull image
 
 docker login
-docker pull n3mesjs/n3mesjs.com:v1.1
+docker pull n3mesjs/n3mesjs.com:v1.0
 
 # Create the container 
 
