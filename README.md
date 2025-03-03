@@ -56,4 +56,4 @@ docker pull n3mesjs/n3mesjs.com:v1.0
 
 # Create the container 
 
-docker run --name n3mesjs.com -p 3000:3000 n3mesjs.com
+docker run --name n3mesjs.com -p 3000:3000 n3mesjs/n3mesjs.com:v1.0
