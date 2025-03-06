@@ -1,6 +1,9 @@
 "use client"
+
 import Image from 'next/image';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useRef, Dispatch, SetStateAction } from 'react';
+import Draggable from 'react-draggable';
+
 // React Icons
 import { IconContext } from "react-icons";
 import { FaInstagram, FaGithub, FaJava } from "react-icons/fa";
@@ -11,13 +14,15 @@ import { FiXSquare } from "react-icons/fi";
 
 // Definisco l'interfaccia per le props dei componenti Window
 interface WindowProps {
-    setShowState: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowState: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
     const [showSocials, setShowSocials] = useState<boolean>(false);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     return (
         <>
@@ -52,6 +57,7 @@ export default function Windows() {
                 </button>
             </div>
 
+
             {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} /> : null}
             {showSocials ? <SocialsWindow setShowState={setShowSocials} /> : null}
             {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} /> : null}
@@ -59,18 +65,19 @@ export default function Windows() {
     )
 }
 
-const ColorPicker = ({setShowState}: WindowProps ) => {
+const ColorPicker = ({ setShowState }: WindowProps) => {
 
     const [color, setColor] = useState("#FFFFFF");
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     const cambiaColore = (e: ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value);
     }
 
     return (
-        <>
-            <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
-                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
+        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as any}>
+            <div className='absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer' ref={nodeRef}>
+                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle'>
                     <h1>colorpicker.jsx</h1>
                     <button onClick={() => { setShowState(false) }}>
                         <IconContext.Provider value={{ color: "white" }}>
@@ -86,13 +93,17 @@ const ColorPicker = ({setShowState}: WindowProps ) => {
                     <input type="color" value={color} onChange={cambiaColore} />
                 </section >
             </div >
-        </>
+        </Draggable>
     );
 }
 
 const SocialsWindow = ({ setShowState }: WindowProps) => {
+
+    const nodeRef = useRef<HTMLDivElement>(null);
+
     return (
-        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
+        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as any}>
+        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl' ref={nodeRef}>
             <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
                 <h1>AboutMe.txt</h1>
                 <button onClick={() => { setShowState(false) }}>
@@ -113,13 +124,18 @@ const SocialsWindow = ({ setShowState }: WindowProps) => {
                 </div>
             </section >
         </div >
+        </Draggable>
     )
 }
 
 const AboutMeWindow = ({ setShowState }: WindowProps) => {
+
+    const nodeRef = useRef<HTMLDivElement>(null);
     const iconsSize: number = 70;
+
     return (
-        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
+        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as any}>
+        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl' ref={nodeRef}>
             <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
                 <h1>AboutMe.txt</h1>
                 <button onClick={() => { setShowState(false) }}>
@@ -153,5 +169,6 @@ const AboutMeWindow = ({ setShowState }: WindowProps) => {
                 </div>
             </section>
         </div>
+        </Draggable>
     )
 }
