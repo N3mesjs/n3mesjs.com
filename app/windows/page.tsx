@@ -1,8 +1,6 @@
 "use client"
-
 import Image from 'next/image';
-import { useRef } from 'react';
-
+import { useState, ChangeEvent } from 'react';
 // React Icons
 import { IconContext } from "react-icons";
 import { FaInstagram, FaGithub, FaJava } from "react-icons/fa";
@@ -11,72 +9,148 @@ import { SiNextdotjs, SiVite } from "react-icons/si";
 import { TbBrandCSharp } from "react-icons/tb";
 import { FiXSquare } from "react-icons/fi";
 
-export default function Windows() {
-    const nodeRef = useRef<any>(null);
+// Definisco l'interfaccia per le props dei componenti Window
+interface WindowProps {
+    setShowState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-    const handleAboutMe = () => {}
+export default function Windows() {
+    const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
+    const [showSocials, setShowSocials] = useState<boolean>(false);
+    const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
 
     return (
         <>
             <div className='w-screen h-screen z-0 overflow-hidden'>
-                <Image src="/wallpaper.png" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
+                <Image src="/wallpaper2.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
             </div>
-
             <div className='absolute flex flex-col top-1 left-1'>
-                <button onClick={handleAboutMe}>
+                <button onClick={() => setShowAboutMe(true)}>
                     <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
                         <Image src="/txtIcon.png" alt="Logo" width={100} height={100} draggable={false} quality={100} unoptimized={true} />
                         <p>AboutMe.txt</p>
                     </div>
                 </button>
+
+                <button onClick={() => setShowSocials(true)}>
+                    <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
+                        <Image src="/txtIcon.png" alt="Logo" width={100} height={100} draggable={false} quality={100} unoptimized={true} />
+                        <p>Socials.txt</p>
+                    </div>
+                </button>
+
+                <button onClick={() => setShowColorPicker(true)}>
+                    <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
+                        <Image src="/color-picker.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
+                        <p>colorpicker.jsx</p>
+                    </div>
+                </button>
+            </div>
+            <div className='absolute flex z-10 bottom-0 w-screen bg-[#2727279f] m-2 rounded-2xl justify-center items-center'>
+                <button className='hover:bg-[#5252529f] p-1 rounded-xl'>
+                    <Image src="/micLogo.png" alt="Logo" width={64} height={64} draggable={false} quality={100} unoptimized={true} />
+                </button>
             </div>
 
-            <div className='absolute flex z-10 bottom-0 w-screen bg-[#2727279f] m-2 rounded-2xl justify-center items-center'>
-                <button className='hover:bg-[#5252529f] p-1 rounded-xl'><Image src="/winlogo.png" alt="Logo" width="30" height="30" draggable={false} quality={100} unoptimized={true} /></button>
-            </div>
-            {<AboutMeWindow /> : ""}
+            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} /> : null}
+            {showSocials ? <SocialsWindow setShowState={setShowSocials} /> : null}
+            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} /> : null}
         </>
     )
 }
 
+const ColorPicker = ({setShowState}: WindowProps ) => {
 
-const AboutMeWindow = () => {
-    const iconsSize: number = 70;
+    const [color, setColor] = useState("#FFFFFF");
+
+    const cambiaColore = (e: ChangeEvent<HTMLInputElement>) => {
+        setColor(e.target.value);
+    }
+
     return (
-        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-4 bg-[#272727] rounded-2xl'>
+        <>
+            <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
+                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
+                    <h1>colorpicker.jsx</h1>
+                    <button onClick={() => { setShowState(false) }}>
+                        <IconContext.Provider value={{ color: "white" }}>
+                            <FiXSquare size="30" />
+                        </IconContext.Provider>
+                    </button>
+                </div>
+                <section className='flex flex-col items-center'>
+                    <h1 className="text-[30px] font-bold">Color Picker</h1>
+                    <div className="w-[300px] p-[30px] rounded-lg mb-2" style={{ backgroundColor: color }}>
+                        <p style={color == "#000000" ? { color: "white" } : { color: "black" }} className="text-black" id="testo">Colore Selezionato: <span className="font-bold">{color}</span></p>
+                    </div>  {/* Ricorda nello style le prime parentesi sono per il codice JS e le seconde perche devi passare un oggetto che sarebbe il CSS*/}
+                    <input type="color" value={color} onChange={cambiaColore} />
+                </section >
+            </div >
+        </>
+    );
+}
+
+const SocialsWindow = ({ setShowState }: WindowProps) => {
+    return (
+        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
             <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
                 <h1>AboutMe.txt</h1>
-                <button><IconContext.Provider value={{ color: "white" }}>
-                          <FiXSquare size="30"/>
-                        </IconContext.Provider>
+                <button onClick={() => { setShowState(false) }}>
+                    <IconContext.Provider value={{ color: "white" }}>
+                        <FiXSquare size="30" />
+                    </IconContext.Provider>
                 </button>
             </div>
-
-            <section>
-            <p className="text-[4em] text-center max-lg:text-[2em] mt-6">
-                Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
-                <br />
-                I&apos;m a <u>Full Stack</u> developer
-              </p>
-
-              <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
-              </section>
-
-              <section className="mt-[4em] flex flex-col items-center mb-[3em]">
-              <h2 className="text-[3em] mb-3 max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
-              <div className="w-[400px] overflow-hidden flex">
-                <div className="flex divIcone gap-4">
-                  <IoLogoJavascript size={iconsSize} />
-                  <IoLogoCss3 size={iconsSize} />
-                  <IoLogoHtml5 size={iconsSize} />
-                  <IoLogoReact size={iconsSize} />
-                  <IoLogoNodejs size={iconsSize} />
-                  <SiNextdotjs size={iconsSize} />
-                  <SiVite size={iconsSize} />
-                  <TbBrandCSharp size={iconsSize} />
-                  <FaJava size={iconsSize} />
+            <section className='flex flex-col items-center'>
+                <h1 className='text-[4em] mb-[1em]'>Follow me on my <u>socials</u>!</h1>
+                <div className="flex gap-4">
+                    <a href="https://www.instagram.com/delsorbo_alessio/" target="_blank" className="flex items-center bg-[hsl(212,79%,46%)] hover:bg-[hsl(212,54%,28%)] font-bold p-3 rounded-2xl gap-2">
+                        <FaInstagram size={25} />Instagram
+                    </a>
+                    <a href="https://github.com/N3mesjs" target="_blank" className="flex items-center bg-[hsl(212,17%,17%)] hover:bg-[hsl(207,17%,12%)] font-bold p-3 rounded-2xl gap-2">
+                        <FaGithub size={25} />Github
+                    </a>
                 </div>
-              </div>
+            </section >
+        </div >
+    )
+}
+
+const AboutMeWindow = ({ setShowState }: WindowProps) => {
+    const iconsSize: number = 70;
+    return (
+        <div className='absolute flex flex-col z-10 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] p-[4em] bg-[#272727] rounded-2xl'>
+            <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2'>
+                <h1>AboutMe.txt</h1>
+                <button onClick={() => { setShowState(false) }}>
+                    <IconContext.Provider value={{ color: "white" }}>
+                        <FiXSquare size="30" />
+                    </IconContext.Provider>
+                </button>
+            </div>
+            <section>
+                <p className="text-[4em] text-center max-lg:text-[2em] mt-6">
+                    Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
+                    <br />
+                    I&apos;m a <u>Full Stack</u> developer
+                </p>
+                <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
+            </section>
+            <section className="mt-[4em] flex flex-col items-center mb-[3em]">
+                <h2 className="text-[3em] mb-3 max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
+                <div className="w-[400px] overflow-hidden flex">
+                    <div className="flex divIcone gap-4">
+                        <IoLogoJavascript size={iconsSize} />
+                        <IoLogoCss3 size={iconsSize} />
+                        <IoLogoHtml5 size={iconsSize} />
+                        <IoLogoReact size={iconsSize} />
+                        <IoLogoNodejs size={iconsSize} />
+                        <SiNextdotjs size={iconsSize} />
+                        <SiVite size={iconsSize} />
+                        <TbBrandCSharp size={iconsSize} />
+                        <FaJava size={iconsSize} />
+                    </div>
+                </div>
             </section>
         </div>
     )
