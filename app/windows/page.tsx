@@ -95,7 +95,7 @@ const ColorPicker = ({ setShowState }: WindowProps) => {
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className='absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer' ref={nodeRef} id='color'>
+            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hidden ? "hidden" : ""}`} ref={nodeRef} id='color'>
                 <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle'>
                     <h1>colorpicker.jsx</h1>
                     <div className='flex items-center justify-center'>
@@ -170,7 +170,7 @@ const AboutMeWindow = ({ setShowState }: WindowProps) => {
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className='absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl' ref={nodeRef} id='about'>
+            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hidden ? "hidden" : ""}`} ref={nodeRef} id='about'>
                 <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
                     <h1>AboutMe.txt</h1>
                     <div className='flex items-center justify-center'>
