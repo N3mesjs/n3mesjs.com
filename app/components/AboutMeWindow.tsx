@@ -16,11 +16,9 @@ interface WindowProps {
     setShowState: Dispatch<SetStateAction<boolean>>;
     setHideState: Dispatch<SetStateAction<boolean>>;
     hideState: boolean;
-    setZ: Dispatch<SetStateAction<number>>;
-    Z: number;
 }
 
-export default function AboutMeWindow({ setShowState, setHideState, hideState, setZ, Z }: WindowProps) {
+export default function AboutMeWindow({ setShowState, setHideState, hideState }: WindowProps) {
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const iconsSize: number = 70;

@@ -11,6 +11,7 @@ import WindowsMenu from './components/WinMenu';
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+    const [showFirebaseChat, setShowFireBaseChat] = useState<boolean>(false);
     const [showWinMenu, setShowWinMenu] = useState<boolean>(false);
 
     const [hideAboutMe, setHideAboutMe] = useState<boolean>(false);
@@ -18,9 +19,6 @@ export default function Windows() {
 
     const [iconeOrdine, setIconeOrdine] = useState<string[]>([]);
     const [listaIcone, setListaIcone] = useState<any>([]);
-
-    const globalZIndex: number = 0;
-    const [zIndex, setzIndex] = useState<number>(0); 
 
     const winRef = useRef<HTMLDivElement | null>(null);
     const winButton = useRef<HTMLButtonElement | null>(null);
@@ -90,6 +88,13 @@ export default function Windows() {
                         <p>colorpicker.tsx</p>
                     </div>
                 </button>
+
+                <button onDoubleClick={() => setShowFireBaseChat(true)}>
+                    <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
+                        <Image src="/fireBase.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
+                        <p>liveChat.tsx</p>
+                    </div>
+                </button>
             </div>
 
             <div className='absolute flex bottom-0 w-screen bg-[#2727279f] m-2 rounded-2xl justify-start items-center gap-3'>
@@ -108,8 +113,8 @@ export default function Windows() {
                 Quindi, se listaIcone è un array di componenti, scrivendo {listaIcone} verranno renderizzati tutti gli elementi al suo interno senza ulteriori accorgimenti. */}
             </div>
 
-            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} setZ={setzIndex} Z={zIndex}/> : null}
-            {/* {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null} */}
+            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
+            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
             {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
         </>
     )
