@@ -19,6 +19,9 @@ export default function Windows() {
     const [iconeOrdine, setIconeOrdine] = useState<string[]>([]);
     const [listaIcone, setListaIcone] = useState<any>([]);
 
+    const globalZIndex: number = 0;
+    const [zIndex, setzIndex] = useState<number>(0); 
+
     const winRef = useRef<HTMLDivElement | null>(null);
     const winButton = useRef<HTMLButtonElement | null>(null);
 
@@ -105,8 +108,8 @@ export default function Windows() {
                 Quindi, se listaIcone è un array di componenti, scrivendo {listaIcone} verranno renderizzati tutti gli elementi al suo interno senza ulteriori accorgimenti. */}
             </div>
 
-            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
-            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
+            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} setZIndex={setZIndex} /> : null}
+            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} setZIndex={setZIndex} /> : null}
             {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
         </>
     )
