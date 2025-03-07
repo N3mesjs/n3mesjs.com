@@ -16,10 +16,9 @@ interface WindowProps {
     setShowState: Dispatch<SetStateAction<boolean>>;
     setHideState: Dispatch<SetStateAction<boolean>>;
     hideState: boolean;
-    setZIndex: Dispatch<SetStateAction<number>>;
 }
 
-export default function AboutMeWindow({ setShowState, setHideState, hideState, setZIndex }: WindowProps) {
+export default function AboutMeWindow({ setShowState, setHideState, hideState }: WindowProps) {
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const iconsSize: number = 70;
@@ -27,7 +26,7 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState, s
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
             <div ref={nodeRef}>
-                <div className={`absolute flex flex-col z-10 left-1/2 top-0 -translate-x-1/2 -translate-y-[100%] p-[4em] bg-[#272727] rounded-2xl ${hideState ? "hidden" : ""}`} onClick={setZIndex(50)}>
+                <div className={`absolute flex flex-col z-10 left-1/2 top-0 -translate-x-1/2 -translate-y-[100%] p-[4em] bg-[#272727] rounded-2xl ${hideState ? "hidden" : ""}`}>
                     <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
                         <div className='flex items-center gap-1'>
                             <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />

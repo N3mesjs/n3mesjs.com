@@ -7,7 +7,7 @@ interface WinMenuProps {
 
 export default function WinMenu({ winRef }: WinMenuProps) {
     return (
-        <div className="absolute bottom-0 left-[1em] p-[3em] rounded-2xl bg-[#2c2c2c] mb-[4.5rem] flex flex-col justify-center w-[26em]" ref={winRef} onClick={}>
+        <div className="absolute bottom-0 left-[1em] p-[3em] rounded-2xl bg-[#2c2c2c] mb-[4.5rem] flex flex-col justify-center w-[26em]" ref={winRef}>
             <div className="flex justify-between items-center w-full mb-4">
                 <h1 className="font-bold text-[1.5em]">My Socials</h1>
                 <button className="p-2 rounded-xl bg-[#292929] text-[0.9em]">All &gt;</button>
