@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState, Dispatch, SetStateAction, useEffect, useRef, RefObject } from 'react';
+import React, { useState, useEffect, useRef, JSXElementConstructor } from 'react';
 
 import ColorPicker from './components/ColorPicker';
 import AboutMeWindow from './components/AboutMeWindow';
