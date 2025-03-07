@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import { useState, ChangeEvent, useRef, Dispatch, SetStateAction, RefObject, useEffect } from 'react';
+import { useState, ChangeEvent, useRef, Dispatch, SetStateAction, RefObject } from 'react';
 import Draggable from 'react-draggable';
 
 // React Icons
@@ -16,6 +16,8 @@ import { BsDashLg } from "react-icons/bs";
 // Definisco l'interfaccia per le props dei componenti Window
 interface WindowProps {
     setShowState: Dispatch<SetStateAction<boolean>>;
+    setHideState: Dispatch<SetStateAction<boolean>>;
+    hideState: boolean;
 }
 
 export default function Windows() {
@@ -23,10 +25,14 @@ export default function Windows() {
     const [showSocials, setShowSocials] = useState<boolean>(false);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
 
+    const [hideAboutMe, setHideAboutMe] = useState<boolean>(false);
+    const [hideSocials, setHideSocials] = useState<boolean>(false);
+    const [hideColorPicker, setHideColorPicker] = useState<boolean>(false);
+
     return (
         <>
             <div className='w-screen h-screen z-0 overflow-hidden'>
-                <Image src="/wallpaper2.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
+                <Image src="/wallpaper1.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
             </div>
             <div className='absolute flex flex-col top-1 left-1'>
                 <button onDoubleClick={() => setShowAboutMe(true)}>
@@ -55,39 +61,45 @@ export default function Windows() {
                     <Image src="/micLogo.png" alt="Logo" width={64} height={64} draggable={false} quality={100} unoptimized={true} />
                 </button>
 
-                {showAboutMe ?
-                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => document.querySelector('#about')?.classList.remove("hidden")}>
+                {showAboutMe ? (
+                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideAboutMe(false)}>
                         <div className="flex items-center">
                             <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
+                            <p>AboutMe.txt</p>
                         </div>
-                    </button> : null}
+                    </button>
+                ) : null}
 
-                {showSocials ? <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => document.querySelector('#social')?.classList.remove("hidden")}>
-                    <div className="flex items-center">
-                        <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                    </div>
-                </button> : null}
+                {showSocials ? (
+                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideSocials(false)}>
+                        <div className="flex items-center">
+                            <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
+                            <p>Socials.txt</p>
+                        </div>
+                    </button>
+                ) : null}
 
-                {showColorPicker ? <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => document.querySelector('#color')?.classList.remove("hidden")}>
-                    <div className="flex items-center">
-                        <Image src="/color-picker.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                    </div>
-                </button> : null}
+                {showColorPicker ? (
+                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideColorPicker(false)}>
+                        <div className="flex items-center">
+                            <Image src="/color-picker.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
+                            <p>colorpicker.jsx</p>
+                        </div>
+                    </button>
+                ) : null}
             </div>
 
-
-            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} /> : null}
-            {showSocials ? <SocialsWindow setShowState={setShowSocials} /> : null}
-            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker}/> : null}
+            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
+            {showSocials ? <SocialsWindow setShowState={setShowSocials} setHideState={setHideSocials} hideState={hideSocials} /> : null}
+            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
         </>
     )
 }
 
-const ColorPicker = ({ setShowState }: WindowProps) => {
+const ColorPicker = ({ setShowState, setHideState, hideState }: WindowProps) => {
 
     const [color, setColor] = useState("#FFFFFF");
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const [hidden, setHidden] = useState<boolean>(false);
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     const cambiaColore = (e: ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value);
@@ -95,11 +107,11 @@ const ColorPicker = ({ setShowState }: WindowProps) => {
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hidden ? "hidden" : ""}`} ref={nodeRef} id='color'>
-                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle'>
+            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl ${hideState ? "hidden" : ""}`} ref={nodeRef}>
+                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
                     <h1>colorpicker.jsx</h1>
                     <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHidden(true)}>
+                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
                             <IconContext.Provider value={{ color: "white" }}>
                                 <BsDashLg size="30" />
                             </IconContext.Provider>
@@ -123,18 +135,17 @@ const ColorPicker = ({ setShowState }: WindowProps) => {
     );
 }
 
-const SocialsWindow = ({ setShowState }: WindowProps) => {
+const SocialsWindow = ({ setShowState, setHideState, hideState }: WindowProps) => {
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const [hidden, setHidden] = useState<boolean>(false);
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hidden ? "hidden" : ""}`} ref={nodeRef} id='social'>
+            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hideState ? "hidden" : ""}`} ref={nodeRef}>
                 <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between handle cursor-pointer p-2'>
                     <h1>Socials.txt</h1>
                     <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHidden(true)}>
+                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
                             <IconContext.Provider value={{ color: "white" }}>
                                 <BsDashLg size="30" />
                             </IconContext.Provider>
@@ -162,19 +173,18 @@ const SocialsWindow = ({ setShowState }: WindowProps) => {
     )
 }
 
-const AboutMeWindow = ({ setShowState }: WindowProps) => {
+const AboutMeWindow = ({ setShowState, setHideState, hideState }: WindowProps) => {
 
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const [hidden, setHidden] = useState<boolean>(false);
+    const nodeRef = useRef<HTMLDivElement>(null);
     const iconsSize: number = 70;
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hidden ? "hidden" : ""}`} ref={nodeRef} id='about'>
+            <div className={`absolute flex flex-col z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hideState ? "hidden" : ""}`} ref={nodeRef}>
                 <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
                     <h1>AboutMe.txt</h1>
                     <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHidden(true)}>
+                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
                             <IconContext.Provider value={{ color: "white" }}>
                                 <BsDashLg size="30" />
                             </IconContext.Provider>
