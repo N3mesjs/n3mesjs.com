@@ -1,24 +1,12 @@
 "use client"
 
 import Image from 'next/image';
-import { useState, ChangeEvent, useRef, Dispatch, SetStateAction, RefObject } from 'react';
-import Draggable from 'react-draggable';
+import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
-// React Icons
-import { IconContext } from "react-icons";
-import { FaInstagram, FaGithub, FaJava } from "react-icons/fa";
-import { IoLogoJavascript, IoLogoCss3, IoLogoHtml5, IoLogoReact, IoLogoNodejs } from "react-icons/io5";
-import { SiNextdotjs, SiVite } from "react-icons/si";
-import { TbBrandCSharp } from "react-icons/tb";
-import { GoX } from "react-icons/go";
-import { BsDashLg } from "react-icons/bs";
-
-// Definisco l'interfaccia per le props dei componenti Window
-interface WindowProps {
-    setShowState: Dispatch<SetStateAction<boolean>>;
-    setHideState: Dispatch<SetStateAction<boolean>>;
-    hideState: boolean;
-}
+import ColorPicker from './components/ColorPicker';
+import SocialsWindow from './components/SocialsWindow';
+import AboutMeWindow from './components/AboutMeWindow';
+import Icona from './components/Icona';
 
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
@@ -28,6 +16,49 @@ export default function Windows() {
     const [hideAboutMe, setHideAboutMe] = useState<boolean>(false);
     const [hideSocials, setHideSocials] = useState<boolean>(false);
     const [hideColorPicker, setHideColorPicker] = useState<boolean>(false);
+
+    const [iconeOrdine, setIconeOrdine] = useState<string[]>([]);
+    const [listaIcone, setListaIcone] = useState<any>([]);
+
+    // Quando una finestra viene aperta, aggiungi la chiave all'array (se non presente)
+    useEffect(() => {
+        if (showAboutMe && !iconeOrdine.includes('about')) {
+            setIconeOrdine(prev => [...prev, 'about']);
+        } else if (!showAboutMe && iconeOrdine.includes('about')) {
+            setIconeOrdine(prev => prev.filter(key => key !== 'about'));
+        }
+    }, [showAboutMe]);
+
+    useEffect(() => {
+        if (showSocials && !iconeOrdine.includes('socials')) {
+            setIconeOrdine(prev => [...prev, 'socials']);
+        } else if (!showSocials && iconeOrdine.includes('socials')) {
+            setIconeOrdine(prev => prev.filter(key => key !== 'socials'));
+        }
+    }, [showSocials]);
+
+    useEffect(() => {
+        if (showColorPicker && !iconeOrdine.includes('colorpicker')) {
+            setIconeOrdine(prev => [...prev, 'colorpicker']);
+        } else if (!showColorPicker && iconeOrdine.includes('colorpicker')) {
+            setIconeOrdine(prev => prev.filter(key => key !== 'colorpicker'));
+        }
+    }, [showColorPicker]);
+
+
+    // Ora costruisci l'array di icone in base all'ordine registrato
+    // potrei non usare useEffect e fare direttamente la mappatura dato che deriva da iconeOrdine, e quindi react si occupa di fare il render a ogni suo cambiamento
+    useEffect(() => {
+        setListaIcone(iconeOrdine.map(key => {
+            if (key === 'about')
+                return <Icona key="about" setHideState={setHideAboutMe} Immagine="txtIcon.png" Title="AboutMe.txt" />;
+            else if (key === 'socials')
+                return <Icona key="socials" setHideState={setHideSocials} Immagine="txtIcon.png" Title="Socials.txt" />;
+            else if (key === 'colorpicker')
+                return <Icona key="colorpicker" setHideState={setHideColorPicker} Immagine="color-picker.png" Title="colorpicker.jsx" />;
+            return null;
+        }));
+    }, [iconeOrdine]);
 
     return (
         <>
@@ -60,167 +91,15 @@ export default function Windows() {
                 <button className='hover:bg-[#5252529f] p-1 rounded-xl'>
                     <Image src="/micLogo.png" alt="Logo" width={64} height={64} draggable={false} quality={100} unoptimized={true} />
                 </button>
-
-                {showAboutMe ? (
-                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideAboutMe(false)}>
-                        <div className="flex items-center">
-                            <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                            <p>AboutMe.txt</p>
-                        </div>
-                    </button>
-                ) : null}
-
-                {showSocials ? (
-                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideSocials(false)}>
-                        <div className="flex items-center">
-                            <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                            <p>Socials.txt</p>
-                        </div>
-                    </button>
-                ) : null}
-
-                {showColorPicker ? (
-                    <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={() => setHideColorPicker(false)}>
-                        <div className="flex items-center">
-                            <Image src="/color-picker.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                            <p>colorpicker.jsx</p>
-                        </div>
-                    </button>
-                ) : null}
+                {listaIcone}
+                {/* In React, se una variabile contiene un array di elementi JSX, puoi semplicemente inserirlo in una porzione di JSX (usando le parentesi graffe) 
+                e React si occuperà di renderizzarne ciascun elemento nell'array. 
+                Quindi, se listaIcone è un array di componenti, scrivendo {listaIcone} verranno renderizzati tutti gli elementi al suo interno senza ulteriori accorgimenti. */}
             </div>
 
             {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
             {showSocials ? <SocialsWindow setShowState={setShowSocials} setHideState={setHideSocials} hideState={hideSocials} /> : null}
             {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
         </>
-    )
-}
-
-const ColorPicker = ({ setShowState, setHideState, hideState }: WindowProps) => {
-
-    const [color, setColor] = useState("#FFFFFF");
-    const nodeRef = useRef<HTMLDivElement>(null);
-
-    const cambiaColore = (e: ChangeEvent<HTMLInputElement>) => {
-        setColor(e.target.value);
-    }
-
-    return (
-        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 top-0 left-0 p-[4em] bg-[#272727] rounded-2xl ${hideState ? "hidden" : ""}`} ref={nodeRef}>
-                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
-                    <h1>colorpicker.jsx</h1>
-                    <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <BsDashLg size="30" />
-                            </IconContext.Provider>
-                        </button>
-                        <button className='hover:bg-red-700' onClick={() => { setShowState(false) }}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <GoX size="30" />
-                            </IconContext.Provider>
-                        </button>
-                    </div>
-                </div>
-                <section className='flex flex-col items-center'>
-                    <h1 className="text-[30px] font-bold">Color Picker</h1>
-                    <div className="w-[300px] p-[30px] rounded-lg mb-2" style={{ backgroundColor: color }}>
-                        <p style={color == "#000000" ? { color: "white" } : { color: "black" }} className="text-black" id="testo">Colore Selezionato: <span className="font-bold">{color}</span></p>
-                    </div>  {/* Ricorda nello style le prime parentesi sono per il codice JS e le seconde perche devi passare un oggetto che sarebbe il CSS*/}
-                    <input type="color" value={color} onChange={cambiaColore} />
-                </section >
-            </div >
-        </Draggable>
-    );
-}
-
-const SocialsWindow = ({ setShowState, setHideState, hideState }: WindowProps) => {
-
-    const nodeRef = useRef<HTMLDivElement>(null);
-
-    return (
-        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 top-0 left-0 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hideState ? "hidden" : ""}`} ref={nodeRef}>
-                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between handle cursor-pointer p-2'>
-                    <h1>Socials.txt</h1>
-                    <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <BsDashLg size="30" />
-                            </IconContext.Provider>
-                        </button>
-                        <button className='hover:bg-red-700' onClick={() => { setShowState(false) }}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <GoX size="30" />
-                            </IconContext.Provider>
-                        </button>
-                    </div>
-                </div>
-                <section className='flex flex-col items-center'>
-                    <h1 className='text-[4em] mb-[1em]'>Follow me on my <u>socials</u>!</h1>
-                    <div className="flex gap-4">
-                        <a href="https://www.instagram.com/delsorbo_alessio/" target="_blank" className="flex items-center bg-[hsl(212,79%,46%)] hover:bg-[hsl(212,54%,28%)] font-bold p-3 rounded-2xl gap-2">
-                            <FaInstagram size={25} />Instagram
-                        </a>
-                        <a href="https://github.com/N3mesjs" target="_blank" className="flex items-center bg-[hsl(212,17%,17%)] hover:bg-[hsl(207,17%,12%)] font-bold p-3 rounded-2xl gap-2">
-                            <FaGithub size={25} />Github
-                        </a>
-                    </div>
-                </section >
-            </div >
-        </Draggable>
-    )
-}
-
-const AboutMeWindow = ({ setShowState, setHideState, hideState }: WindowProps) => {
-
-    const nodeRef = useRef<HTMLDivElement>(null);
-    const iconsSize: number = 70;
-
-    return (
-        <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
-            <div className={`absolute flex flex-col z-10 top-0 left-0 p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hideState ? "hidden" : ""}`} ref={nodeRef}>
-                <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
-                    <h1>AboutMe.txt</h1>
-                    <div className='flex items-center justify-center'>
-                        <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <BsDashLg size="30" />
-                            </IconContext.Provider>
-                        </button>
-                        <button className='hover:bg-red-700' onClick={() => { setShowState(false) }}>
-                            <IconContext.Provider value={{ color: "white" }}>
-                                <GoX size="30" />
-                            </IconContext.Provider>
-                        </button>
-                    </div>
-                </div>
-                <section>
-                    <p className="text-[4em] text-center max-lg:text-[2em] mt-6">
-                        Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
-                        <br />
-                        I&apos;m a <u>Full Stack</u> developer
-                    </p>
-                    <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
-                </section>
-                <section className="mt-[4em] flex flex-col items-center mb-[3em]">
-                    <h2 className="text-[3em] mb-3 max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
-                    <div className="w-[400px] overflow-hidden flex">
-                        <div className="flex divIcone gap-4">
-                            <IoLogoJavascript size={iconsSize} />
-                            <IoLogoCss3 size={iconsSize} />
-                            <IoLogoHtml5 size={iconsSize} />
-                            <IoLogoReact size={iconsSize} />
-                            <IoLogoNodejs size={iconsSize} />
-                            <SiNextdotjs size={iconsSize} />
-                            <SiVite size={iconsSize} />
-                            <TbBrandCSharp size={iconsSize} />
-                            <FaJava size={iconsSize} />
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </Draggable>
     )
 }
