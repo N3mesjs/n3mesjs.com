@@ -1,4 +1,5 @@
 import { useRef, Dispatch, SetStateAction, RefObject } from 'react';
+import Image from 'next/image';
 import Draggable from 'react-draggable';
 
 
@@ -25,9 +26,12 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
             <div ref={nodeRef}>
-                <div className={`absolute flex flex-col z-10 left-1/2 top-0 -translate-x-1/2 -translate-y-[150%] p-[4em] bg-[#272727] rounded-2xl cursor-pointer ${hideState ? "hidden" : ""}`}>
+                <div className={`absolute flex flex-col z-10 left-1/2 top-0 -translate-x-1/2 -translate-y-[150%] p-[4em] bg-[#272727] rounded-2xl ${hideState ? "hidden" : ""}`}>
                     <div className='absolute flex top-0 left-0 bg-[#000] w-full justify-between p-2 handle cursor-pointer'>
-                        <h1>AboutMe.txt</h1>
+                        <div className='flex items-center gap-1'>
+                            <Image src="/txtIcon.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
+                            <h1>AboutMe.txt</h1>
+                        </div>
                         <div className='flex items-center justify-center'>
                             <button className='hover:bg-[#2b2b2b]' onClick={() => setHideState(true)}>
                                 <IconContext.Provider value={{ color: "white" }}>
@@ -50,7 +54,7 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                         <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
                     </section>
                     <section className="mt-[4em] flex flex-col items-center mb-[3em]">
-                        <h2 className="text-[3em] mb-3 max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
+                        <h2 className="text-[3em] mb-[1em] max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
                         <div className="w-[400px] overflow-hidden flex">
                             <div className="flex divIcone gap-4">
                                 <IoLogoJavascript size={iconsSize} />
