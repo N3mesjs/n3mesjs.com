@@ -70,8 +70,8 @@ export default function Windows() {
 
     return (
         <>
-            <div className='w-screen h-screen overflow-hidden'>
-                <Image src="/wallpaper1.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
+            <div className='w-screen h-screen'>
+                <Image src="/wallpaper.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
             </div>
             <div className='absolute flex flex-col top-1 left-1'>
                 <button onDoubleClick={() => setShowAboutMe(true)}>
