@@ -55,7 +55,7 @@ export default function Windows() {
             else if (key === 'socials')
                 return <Icona key="socials" setHideState={setHideSocials} Immagine="txtIcon.png" Title="Socials.txt" />;
             else if (key === 'colorpicker')
-                return <Icona key="colorpicker" setHideState={setHideColorPicker} Immagine="color-picker.png" Title="colorpicker.jsx" />;
+                return <Icona key="colorpicker" setHideState={setHideColorPicker} Immagine="color-picker.png" Title="colorpicker.tsx" />;
             return null;
         }));
     }, [iconeOrdine]);
@@ -83,13 +83,13 @@ export default function Windows() {
                 <button onDoubleClick={() => setShowColorPicker(true)}>
                     <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
                         <Image src="/color-picker.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
-                        <p>colorpicker.jsx</p>
+                        <p>colorpicker.tsx</p>
                     </div>
                 </button>
             </div>
             <div className='absolute flex z-10 bottom-0 w-screen bg-[#2727279f] m-2 rounded-2xl justify-center items-center gap-3'>
-                <button className='hover:bg-[#5252529f] p-1 rounded-xl'>
-                    <Image src="/micLogo.png" alt="Logo" width={64} height={64} draggable={false} quality={100} unoptimized={true} />
+                <button className='hover:bg-[#5252529f] p-2 rounded-xl'>
+                    <Image src="/winLogo.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
                 </button>
                 {listaIcone}
                 {/* In React, se una variabile contiene un array di elementi JSX, puoi semplicemente inserirlo in una porzione di JSX (usando le parentesi graffe) 
