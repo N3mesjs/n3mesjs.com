@@ -7,15 +7,17 @@ import ColorPicker from './components/ColorPicker';
 import AboutMeWindow from './components/AboutMeWindow';
 import Icona from './components/Icona';
 import WindowsMenu from './components/WinMenu';
+import Chat from './components/FireBaseChat';
 
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
-    const [showFirebaseChat, setShowFireBaseChat] = useState<boolean>(false);
+    const [showFireBaseChat, setShowFireBaseChat] = useState<boolean>(false);
     const [showWinMenu, setShowWinMenu] = useState<boolean>(false);
 
     const [hideAboutMe, setHideAboutMe] = useState<boolean>(false);
     const [hideColorPicker, setHideColorPicker] = useState<boolean>(false);
+    const [hideFireBasechat, setHideFireBaseChat] = useState<boolean>(false);
 
     const [iconeOrdine, setIconeOrdine] = useState<string[]>([]);
     const [listaIcone, setListaIcone] = useState<any>([]);
@@ -40,6 +42,14 @@ export default function Windows() {
         }
     }, [showColorPicker]);
 
+    useEffect(() => {
+        if (showFireBaseChat && !iconeOrdine.includes('chat')) {
+            setIconeOrdine(prev => [...prev, 'chat']);
+        } else if (!showFireBaseChat && iconeOrdine.includes('chat')) {
+            setIconeOrdine(prev => prev.filter(key => key !== 'chat'));
+        }
+    }, [showFireBaseChat]);
+
 
     // Ora costruisci l'array di icone in base all'ordine registrato
     // potrei non usare useEffect e fare direttamente la mappatura dato che deriva da iconeOrdine, e quindi react si occupa di fare il render a ogni suo cambiamento
@@ -49,7 +59,8 @@ export default function Windows() {
                 return <Icona key="about" setHideState={setHideAboutMe} Immagine="txtIcon.png" Title="AboutMe.txt" />;
             else if (key === 'colorpicker')
                 return <Icona key="colorpicker" setHideState={setHideColorPicker} Immagine="color-picker.png" Title="colorpicker.tsx" />;
-            return null;
+            else if (key === 'chat')
+                return <Icona key="chat" setHideState={setHideFireBaseChat} Immagine="fireBase.png" Title="liveChat.tsx" />;
         }));
     }, [iconeOrdine]);
 
@@ -115,6 +126,7 @@ export default function Windows() {
 
             {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
             {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
+            {showFireBaseChat ? <Chat setShowState={setShowFireBaseChat} setHideState={setHideFireBaseChat} hideState={hideFireBasechat} /> : null}
             {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
         </>
     )

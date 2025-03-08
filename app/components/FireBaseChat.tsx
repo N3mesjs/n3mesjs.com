@@ -1,4 +1,11 @@
-import { useRef, Dispatch, SetStateAction, RefObject } from 'react';
+"use client"
+
+import { useRef, Dispatch, SetStateAction, RefObject, useState, useEffect } from 'react';
+
+import { auth } from "./FireBaseChat/fireBaseAuth.jsx";
+import { onAuthStateChanged } from "firebase/auth";
+import SignUp from "./FireBaseChat/SignUp.jsx";
+import ChatRoom from "./FireBaseChat/ChatRoom.jsx";
 import Image from 'next/image';
 import Draggable from 'react-draggable';
 
@@ -7,21 +14,23 @@ import { IconContext } from "react-icons";
 import { GoX } from "react-icons/go";
 import { BsDashLg } from "react-icons/bs";
 
-import { FaJava } from "react-icons/fa";
-import { IoLogoJavascript, IoLogoCss3, IoLogoHtml5, IoLogoReact, IoLogoNodejs } from "react-icons/io5";
-import { SiNextdotjs, SiVite } from "react-icons/si";
-import { TbBrandCSharp } from "react-icons/tb";
-
 interface WindowProps {
     setShowState: Dispatch<SetStateAction<boolean>>;
     setHideState: Dispatch<SetStateAction<boolean>>;
     hideState: boolean;
 }
 
-export default function AboutMeWindow({ setShowState, setHideState, hideState }: WindowProps) {
+export default function Chat({ setShowState, setHideState, hideState }: WindowProps) {
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const iconsSize: number = 70;
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (userAuth: any) => {
+            setUser(userAuth);
+        });
+    }, [])
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
@@ -45,30 +54,7 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                             </button>
                         </div>
                     </div>
-                    <section>
-                        <p className="text-[4em] text-center max-lg:text-[2em] mt-6">
-                            Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
-                            <br />
-                            I&apos;m a <u>Full Stack</u> developer
-                        </p>
-                        <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
-                    </section>
-                    <section className="mt-[4em] flex flex-col items-center mb-[3em]">
-                        <h2 className="text-[3em] mb-[1em] max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
-                        <div className="w-[400px] overflow-hidden flex">
-                            <div className="flex divIcone gap-4">
-                                <IoLogoJavascript size={iconsSize} />
-                                <IoLogoCss3 size={iconsSize} />
-                                <IoLogoHtml5 size={iconsSize} />
-                                <IoLogoReact size={iconsSize} />
-                                <IoLogoNodejs size={iconsSize} />
-                                <SiNextdotjs size={iconsSize} />
-                                <SiVite size={iconsSize} />
-                                <TbBrandCSharp size={iconsSize} />
-                                <FaJava size={iconsSize} />
-                            </div>
-                        </div>
-                    </section>
+                    {user ? <ChatRoom /> : <SignUp />}
                 </div>
             </div>
         </Draggable>
