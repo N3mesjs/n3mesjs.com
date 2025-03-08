@@ -27,12 +27,12 @@ export default function WinMenu({ winRef }: WinMenuProps) {
                 </a>
             </div>
             <div className="absolute bg-[#202325] bottom-0 left-0 rounded-b-2xl w-full py-[1em] px-[2em] flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                    <Image src="/N3meLogo.jpg" alt="Logo" width={32} height={32} className="rounded-full" /><p>N3mesjs</p>
-                </div>
-                <div>
-                    <Image src="/turnOff.png" alt="Turn Off" width={24} height={24} />
-                </div>
+                    <button className="hover:bg-[#171a1b] p-2 rounded-lg flex items-center gap-2">
+                        <Image src="/N3meLogo.jpg" alt="Logo" width={32} height={32} className="rounded-full" /><p>N3mesjs</p>
+                    </button>
+                    <button className="hover:bg-[#171a1b] p-2 rounded-lg" onClick={() => window.location.href = "about:blank"}>
+                        <Image src="/turnOff.png" alt="Turn Off" width={24} height={24} />
+                    </button>
             </div>
         </div>
     );
