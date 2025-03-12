@@ -1,12 +1,13 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState, useEffect, useRef, JSXElementConstructor } from 'react';
+import React, { useState, useEffect, useRef, MouseEventHandler } from 'react';
 
 import ColorPicker from './components/ColorPicker';
 import AboutMeWindow from './components/AboutMeWindow';
 import Icona from './components/Icona';
 import WindowsMenu from './components/WinMenu';
+import { LargeNumberLike } from 'crypto';
 
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
@@ -18,6 +19,10 @@ export default function Windows() {
 
     const [iconeOrdine, setIconeOrdine] = useState<string[]>([]);
     const [listaIcone, setListaIcone] = useState<any>([]);
+
+    const [rightMenu, setRightMenu] = useState<boolean>(false);
+    const [menuX, setMenuX] = useState<number>(0);
+    const [menuY, setMenuY] = useState<number>(0);
 
     const winRef = useRef<HTMLDivElement | null>(null);
     const winButton = useRef<HTMLButtonElement | null>(null);
@@ -63,10 +68,30 @@ export default function Windows() {
             addEventListener('mousedown', handleMouseDown);
         }
 
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+
         return () => {
             removeEventListener('mousedown', handleMouseDown);
         }
     });
+
+    const handleRightClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        setMenuX(e.pageX);
+        setMenuY(e.pageY);
+        setRightMenu(true);
+    }
+
+    const ContextMenu = ({x, y}: {x: number; y: number;}) => {
+        return (
+            <div 
+                className="absolute bg-[#272727] z-50 p-3" style={{ left: `${x}px`, top: `${y}px` }}>
+                Menu content
+            </div>
+        )
+    }
+
 
     return (
         <>
@@ -75,14 +100,14 @@ export default function Windows() {
             </div>
             <div className='w-full h-screen'>
                 <div className='absolute flex flex-col top-1 left-1'>
-                    <button onDoubleClick={() => setShowAboutMe(true)}>
+                    <button onDoubleClick={() => setShowAboutMe(true)} onContextMenu={handleRightClick}>
                         <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
                             <Image src="/txtIcon.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
                             <p>AboutMe.txt</p>
                         </div>
                     </button>
 
-                    <button onDoubleClick={() => setShowColorPicker(true)}>
+                    <button onDoubleClick={() => setShowColorPicker(true)} onContextMenu={handleRightClick}>
                         <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
                             <Image src="/color-picker.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
                             <p>colorpicker.tsx</p>
@@ -110,6 +135,7 @@ export default function Windows() {
                 {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
                 {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
                 {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
+                {rightMenu ? <ContextMenu x={menuX} y={menuY} /> : null}
             </div>
         </>
     )
