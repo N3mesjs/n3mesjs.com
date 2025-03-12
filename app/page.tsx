@@ -56,10 +56,10 @@ export default function Windows() {
         const handleMouseDown = (e: MouseEvent) => {
             if ((winRef.current && !winRef.current.contains(e.target as Node)) || (winButton.current && winButton.current.contains(e.target as Node))) {
                 setShowWinMenu(false);
-              }
+            }
         }
 
-        if(showWinMenu){
+        if (showWinMenu) {
             addEventListener('mousedown', handleMouseDown);
         }
 
@@ -71,43 +71,46 @@ export default function Windows() {
     return (
         <>
             <div className='w-screen h-screen'>
-                <Image src="/wallpaper.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} />
+                <Image src="/wallpaper.jpg" alt="Background" fill={true} draggable={false} quality={100} unoptimized={true} className='object-cover' />
             </div>
-            <div className='absolute flex flex-col top-1 left-1'>
-                <button onDoubleClick={() => setShowAboutMe(true)}>
-                    <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
-                        <Image src="/txtIcon.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
-                        <p>AboutMe.txt</p>
+            <div className='w-full h-screen'>
+                <div className='absolute flex flex-col top-1 left-1'>
+                    <button onDoubleClick={() => setShowAboutMe(true)}>
+                        <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
+                            <Image src="/txtIcon.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
+                            <p>AboutMe.txt</p>
+                        </div>
+                    </button>
+
+                    <button onDoubleClick={() => setShowColorPicker(true)}>
+                        <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
+                            <Image src="/color-picker.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
+                            <p>colorpicker.tsx</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div className='absolute bottom-[0.7em] w-[99%] bg-[#2727279f] rounded-2xl left-1/2 -translate-x-1/2'>
+                    <div className='flex justify-start items-center gap-4'>
+                        {/* Inserendo e.stopPropagation() in un handler onMouseDown sul bottone, 
+                        l'evento mousedown non si propaga al listener globale. In questo modo, 
+                        quando fai click il bottone esegue il suo onClick senza che il listener globale lo intercetti. 
+                        Quindi, l'evento non viene "sovrapposto" e il toggle del menu funziona come previsto. */}
+
+                        <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={(e) => setShowWinMenu(prev => !prev)} onMouseDown={(e) => e.stopPropagation()} ref={winButton}>
+                            <Image src="/winLogo.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
+                        </button>
+                        {listaIcone}
+                        {/* In React, se una variabile contiene un array di elementi JSX, puoi semplicemente inserirlo in una porzione di JSX (usando le parentesi graffe) 
+                        e React si occuperà di renderizzarne ciascun elemento nell'array. 
+                        Quindi, se listaIcone è un array di componenti, scrivendo {listaIcone} verranno renderizzati tutti gli elementi al suo interno senza ulteriori accorgimenti. */}
                     </div>
-                </button>
+                </div>
 
-                <button onDoubleClick={() => setShowColorPicker(true)}>
-                    <div className='flex flex-col items-center p-2 hover:bg-[#2727279f] rounded-2xl m-2'>
-                        <Image src="/color-picker.png" alt="Logo" width={70} height={70} draggable={false} quality={100} unoptimized={true} />
-                        <p>colorpicker.tsx</p>
-                    </div>
-                </button>
+                {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
+                {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
+                {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
             </div>
-
-            <div className='absolute flex bottom-0 w-screen bg-[#2727279f] m-2 rounded-2xl justify-start items-center gap-3'>
-
-                {/* Inserendo e.stopPropagation() in un handler onMouseDown sul bottone, 
-                l'evento mousedown non si propaga al listener globale. In questo modo, 
-                quando fai click il bottone esegue il suo onClick senza che il listener globale lo intercetti. 
-                Quindi, l'evento non viene "sovrapposto" e il toggle del menu funziona come previsto. */}
-
-                <button className='hover:bg-[#5252529f] p-2 rounded-xl' onClick={(e) => setShowWinMenu(prev => !prev)} onMouseDown={(e) => e.stopPropagation()} ref={winButton}>
-                    <Image src="/winLogo.png" alt="Logo" width={30} height={30} draggable={false} quality={100} unoptimized={true} />
-                </button>
-                {listaIcone}
-                {/* In React, se una variabile contiene un array di elementi JSX, puoi semplicemente inserirlo in una porzione di JSX (usando le parentesi graffe) 
-                e React si occuperà di renderizzarne ciascun elemento nell'array. 
-                Quindi, se listaIcone è un array di componenti, scrivendo {listaIcone} verranno renderizzati tutti gli elementi al suo interno senza ulteriori accorgimenti. */}
-            </div>
-
-            {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
-            {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
-            {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
         </>
     )
 }
