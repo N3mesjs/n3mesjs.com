@@ -1,12 +1,13 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState, useEffect, useRef, MouseEventHandler } from 'react';
+import React, { useState, useEffect, useRef, MouseEventHandler, Dispatch, SetStateAction, RefObject } from 'react';
 
 import ColorPicker from './components/ColorPicker';
 import AboutMeWindow from './components/AboutMeWindow';
 import Icona from './components/Icona';
 import WindowsMenu from './components/WinMenu';
+import ContextMenu from './components/ContextMenu';
 import { LargeNumberLike } from 'crypto';
 
 export default function Windows() {
@@ -26,6 +27,7 @@ export default function Windows() {
 
     const winRef = useRef<HTMLDivElement | null>(null);
     const winButton = useRef<HTMLButtonElement | null>(null);
+    const divRef = useRef<HTMLDivElement | null>(null);
 
     // Quando una finestra viene aperta, aggiungi la chiave all'array (se non presente)
     useEffect(() => {
@@ -77,19 +79,24 @@ export default function Windows() {
         }
     });
 
+    useEffect(() => {
+        const handleClickOutside = (e: Event) => {
+            if (divRef.current && !divRef.current.contains(e.target as Node)) {
+                setRightMenu(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [])
+
     const handleRightClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         setMenuX(e.pageX);
         setMenuY(e.pageY);
         setRightMenu(true);
-    }
-
-    const ContextMenu = ({x, y}: {x: number; y: number;}) => {
-        return (
-            <div 
-                className="absolute bg-[#272727] z-50 p-3" style={{ left: `${x}px`, top: `${y}px` }}>
-                Menu content
-            </div>
-        )
     }
 
 
@@ -135,7 +142,7 @@ export default function Windows() {
                 {showAboutMe ? <AboutMeWindow setShowState={setShowAboutMe} setHideState={setHideAboutMe} hideState={hideAboutMe} /> : null}
                 {showColorPicker ? <ColorPicker setShowState={setShowColorPicker} setHideState={setHideColorPicker} hideState={hideColorPicker} /> : null}
                 {showWinMenu ? <WindowsMenu winRef={winRef} /> : null}
-                {rightMenu ? <ContextMenu x={menuX} y={menuY} /> : null}
+                {rightMenu ? <ContextMenu x={menuX} y={menuY} reference={divRef} /> : null}
             </div>
         </>
     )

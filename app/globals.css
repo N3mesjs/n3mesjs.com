@@ -125,3 +125,9 @@
     transform: translateX(0%);
   }
 }
+
+@layer components{
+  .menuTendina {
+    @apply flex gap-3 p-2 rounded-lg hover:bg-[#5252529f]
+  }
+}
