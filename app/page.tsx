@@ -8,7 +8,6 @@ import AboutMeWindow from './components/AboutMeWindow';
 import Icona from './components/Icona';
 import WindowsMenu from './components/WinMenu';
 import ContextMenu from './components/ContextMenu';
-import { LargeNumberLike } from 'crypto';
 
 export default function Windows() {
     const [showAboutMe, setShowAboutMe] = useState<boolean>(false);
