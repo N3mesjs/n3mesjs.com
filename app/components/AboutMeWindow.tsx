@@ -21,7 +21,7 @@ interface WindowProps {
 export default function AboutMeWindow({ setShowState, setHideState, hideState }: WindowProps) {
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const iconsSize: number = 70;
+    const iconsSize: number = 124;
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
@@ -57,15 +57,15 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                         <h2 className="text-[3em] mb-[1em] max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
                         <div className="w-[400px] overflow-hidden flex">
                             <div className="flex divIcone gap-4">
-                                <IoLogoJavascript size={iconsSize} />
+                                {/*<IoLogoJavascript size={iconsSize} />
                                 <IoLogoCss3 size={iconsSize} />
                                 <IoLogoHtml5 size={iconsSize} />
                                 <IoLogoReact size={iconsSize} />
                                 <IoLogoNodejs size={iconsSize} />
                                 <SiNextdotjs size={iconsSize} />
-                                <SiVite size={iconsSize} />
-                                <TbBrandCSharp size={iconsSize} />
-                                <FaJava size={iconsSize} />
+                                <SiVite size={iconsSize} /> */}
+                                <Image src='/logos/csharp.png' alt='C# Logo' width={iconsSize} height={iconsSize} />
+                                {/*<FaJava size={iconsSize} />*/}
                             </div>
                         </div>
                     </section>
