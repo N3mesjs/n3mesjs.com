@@ -46,15 +46,15 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                         </div>
                     </div>
                     <section>
-                        <p className="text-[4em] text-center max-lg:text-[2em] mt-6">
+                        <p className="text-[4em] text-center max-2xl:text-[2em] mt-6">
                             Alessio, but call me <span className="font-bold testoFigo">N3mesjs</span>
                             <br />
                             I&apos;m a <u>Full Stack</u> developer
                         </p>
-                        <p className="text-[#535353] text-[20px] mt-4 text-center max-lg:text-[20px]">Working to contribute for a better world</p>
+                        <p className="text-[#535353] text-[20px] mt-4 text-center max-xl:text-[20px]">Working to contribute for a better world</p>
                     </section>
                     <section className="mt-[4em] flex flex-col items-center mb-[3em]">
-                        <h2 className="text-[3em] mb-[1em] max-lg:text-[1.5em]">Explore my <u>knowledge</u></h2>
+                        <h2 className="text-[3em] mb-[1em] max-2xl:text-[2em]">Explore my <u>knowledge</u></h2>
                         <div className="w-[400px] overflow-hidden flex">
                             <div className="flex divIcone gap-4">
                                 {/*<IoLogoJavascript size={iconsSize} />
@@ -65,6 +65,7 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                                 <SiNextdotjs size={iconsSize} />
                                 <SiVite size={iconsSize} /> */}
                                 <Image src='/logos/csharp.png' alt='C# Logo' width={iconsSize} height={iconsSize} />
+                                <Image src='/logos/js.png' alt='JS Logo' width={64} height={64} />
                                 {/*<FaJava size={iconsSize} />*/}
                             </div>
                         </div>
