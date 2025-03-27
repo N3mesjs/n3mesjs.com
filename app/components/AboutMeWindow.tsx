@@ -21,7 +21,7 @@ interface WindowProps {
 export default function AboutMeWindow({ setShowState, setHideState, hideState }: WindowProps) {
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const iconsSize: number = 124;
+    const iconsSize: number = 96;
 
     return (
         <Draggable axis="both" handle=".handle" nodeRef={nodeRef as RefObject<HTMLElement>}>
@@ -65,7 +65,7 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                                 <SiNextdotjs size={iconsSize} />
                                 <SiVite size={iconsSize} /> */}
                                 <Image src='/logos/csharp.png' alt='C# Logo' width={iconsSize} height={iconsSize} />
-                                <Image src='/logos/js.png' alt='JS Logo' width={64} height={64} />
+                                <Image src='/logos/js.png' alt='JS Logo' width={iconsSize} height={iconsSize} />
                                 {/*<FaJava size={iconsSize} />*/}
                             </div>
                         </div>
