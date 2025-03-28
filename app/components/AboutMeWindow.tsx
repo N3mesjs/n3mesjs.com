@@ -7,11 +7,6 @@ import { IconContext } from "react-icons";
 import { GoX } from "react-icons/go";
 import { BsDashLg } from "react-icons/bs";
 
-import { FaJava } from "react-icons/fa";
-import { IoLogoJavascript, IoLogoCss3, IoLogoHtml5, IoLogoReact, IoLogoNodejs } from "react-icons/io5";
-import { SiNextdotjs, SiVite } from "react-icons/si";
-import { TbBrandCSharp } from "react-icons/tb";
-
 interface WindowProps {
     setShowState: Dispatch<SetStateAction<boolean>>;
     setHideState: Dispatch<SetStateAction<boolean>>;
@@ -57,16 +52,11 @@ export default function AboutMeWindow({ setShowState, setHideState, hideState }:
                         <h2 className="text-[3em] mb-[1em] max-2xl:text-[2em]">Explore my <u>knowledge</u></h2>
                         <div className="w-[400px] overflow-hidden flex">
                             <div className="flex divIcone gap-4">
-                                {/*<IoLogoJavascript size={iconsSize} />
-                                <IoLogoCss3 size={iconsSize} />
-                                <IoLogoHtml5 size={iconsSize} />
-                                <IoLogoReact size={iconsSize} />
-                                <IoLogoNodejs size={iconsSize} />
-                                <SiNextdotjs size={iconsSize} />
-                                <SiVite size={iconsSize} /> */}
-                                <Image src='/logos/csharp.png' alt='C# Logo' width={iconsSize} height={iconsSize} />
-                                <Image src='/logos/js.png' alt='JS Logo' width={iconsSize} height={iconsSize} />
-                                {/*<FaJava size={iconsSize} />*/}
+                                <Image src='/logos/csharp.png' alt='C# Logo' width={iconsSize} height={iconsSize} draggable={false}/>
+                                <Image src='/logos/js.png' alt='JS Logo' width={iconsSize} height={iconsSize} draggable={false} />
+                                <Image src='/logos/git.png' alt='git Logo' width={iconsSize} height={iconsSize} draggable={false} />
+                                <Image src='/logos/firebase.png' alt='firebase Logo' width={iconsSize} height={iconsSize} draggable={false} />
+                                <Image src='/logos/html.png' alt='html Logo' width={iconsSize} height={iconsSize} draggable={false} />
                             </div>
                         </div>
                     </section>
